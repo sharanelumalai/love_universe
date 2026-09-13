@@ -1,0 +1,423 @@
+:root {
+  --bg: #090b10;
+  --bg-panel: #0f121a;
+  --ink: #f3f4f8;
+  --ink-dim: #9aa1b4;
+  --pink-1: #ff4fa3;
+  --pink-2: #b336d1;
+  --cyan: #37d6ff;
+  --line: rgba(255,255,255,0.08);
+  --radius: 999px;
+  --ease: cubic-bezier(.22,.9,.32,1);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+/* ---------- Canvas ---------- */
+#scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: radial-gradient(120% 120% at 78% 30%, #131a26 0%, #0c0f16 45%, #07080c 100%);
+}
+#sceneFallback {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: #090b10;
+  background-image: linear-gradient(90deg, rgba(4,5,8,.96) 0%, rgba(4,5,8,.72) 36%, rgba(4,5,8,.18) 72%), url("assets/backgrounds/office-bg.jpg");
+  background-position: center;
+  background-size: cover;
+  filter: saturate(.9);
+}
+body.no-webgl #scene { display: none; }
+body.no-webgl #sceneFallback { display: block; }
+body:not(.no-webgl) #sceneFallback { display: none; }
+
+/* ---------- Loader ---------- */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .7s var(--ease), visibility .7s var(--ease);
+}
+#loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader-inner { text-align: center; }
+.loader-mark { display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; }
+.loader-mark span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--pink-1), var(--cyan));
+  animation: bounce 1s var(--ease) infinite;
+}
+.loader-mark span:nth-child(2) { animation-delay: .12s; }
+.loader-mark span:nth-child(3) { animation-delay: .24s; }
+@keyframes bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: .5; }
+  40% { transform: translateY(-10px); opacity: 1; }
+}
+.loader-text { font-size: 13px; color: var(--ink-dim); letter-spacing: .02em; }
+#loaderPct { display: inline-block; min-width: 34px; margin-left: 4px; color: var(--ink); }
+
+/* ---------- Ambient bokeh ---------- */
+.bokeh-layer { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.bokeh {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  width: var(--s); height: var(--s);
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: .35;
+  animation: drift var(--d) ease-in-out infinite alternate;
+}
+.bokeh--cyan { background: radial-gradient(circle, rgba(55,214,255,.55), transparent 70%); }
+.bokeh--pink { background: radial-gradient(circle, rgba(255,79,163,.5), transparent 70%); }
+@keyframes drift {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(24px,-18px) scale(1.08); }
+}
+
+.vignette {
+  position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  background: radial-gradient(120% 100% at 30% 55%, transparent 40%, rgba(4,5,8,.32) 78%, rgba(2,2,4,.55) 100%);
+}
+.grain {
+  position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: .035; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  /* env(safe-area-inset-*) is 0 on desktop/no-notch devices, so this is a
+     no-op there — but on an iPhone with a Dynamic Island (top) or a phone
+     with a side-mounted cutout in landscape, it keeps the bar clear of it. */
+  padding: calc(26px + env(safe-area-inset-top)) calc(32px + env(safe-area-inset-right)) 26px calc(32px + env(safe-area-inset-left));
+}
+.music-toggle {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 9px 16px 9px 12px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: background .25s var(--ease), border-color .25s var(--ease);
+}
+.music-toggle:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.18); }
+.music-icon { display: inline-flex; color: var(--cyan); }
+.music-toggle[aria-pressed="false"] .music-icon { color: var(--ink-dim); }
+.music-toggle[aria-pressed="true"] .music-icon svg { animation: pulseIcon 1.6s ease-in-out infinite; }
+@keyframes pulseIcon { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.page-counter {
+  font-size: 13px; color: var(--ink-dim); font-variant-numeric: tabular-nums;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--line);
+  padding: 9px 14px;
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+}
+.page-counter #pageCurrent { color: var(--ink); font-weight: 600; }
+.menu-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: background .25s var(--ease), transform .25s var(--ease);
+}
+.menu-toggle:hover { background: rgba(255,255,255,.12); transform: rotate(90deg); }
+
+/* ---------- Story content ---------- */
+.story { position: fixed; inset: 0; z-index: 10; pointer-events: none; }
+.story-inner {
+  position: absolute;
+  left: 6.5%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 420px;
+  pointer-events: auto;
+}
+.story-inner.chapter-11 {
+  left: auto !important;
+  right: 2% !important;
+  width: min(460px, 42vw);
+  max-width: none !important;
+}
+.eyebrow {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  color: var(--pink-1);
+  opacity: 0;
+  transform: translateY(14px);
+  animation: revealUp .8s var(--ease) forwards;
+  animation-delay: .15s;
+}
+.headline {
+  margin: 0 0 18px;
+  font-size: clamp(34px, 4.6vw, 54px);
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(18px);
+  animation: revealUp .8s var(--ease) forwards;
+  animation-delay: .3s;
+}
+.body-copy {
+  margin: 0 0 32px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+  max-width: 34ch;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: revealUp .8s var(--ease) forwards;
+  animation-delay: .45s;
+}
+@keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+  padding: 15px 26px;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(120deg, var(--pink-1), var(--pink-2));
+  box-shadow: 0 12px 30px -8px rgba(255,79,163,.55);
+  opacity: 0;
+  transform: translateY(14px);
+  animation: revealUp .8s var(--ease) forwards;
+  animation-delay: .6s;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), background-position .5s var(--ease);
+  background-size: 160% 160%;
+  background-position: 0% 50%;
+}
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -6px rgba(255,79,163,.7);
+  background-position: 100% 50%;
+}
+.cta:active { transform: translateY(0px) scale(.98); }
+.cta-arrow { display: inline-flex; transition: transform .35s var(--ease); }
+.cta:hover .cta-arrow { transform: translateX(4px); }
+
+.story-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--line);
+  color: var(--ink-dim);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(10px);
+  transition: background .25s var(--ease), color .25s var(--ease);
+}
+.story-arrow:hover { background: rgba(255,255,255,.12); color: var(--ink); }
+.story-arrow--prev { left: 24px; }
+.story-arrow--next { right: 24px; }
+
+/* ---------- Chapter dots ---------- */
+.chapter-nav {
+  position: fixed;
+  bottom: calc(26px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+}
+.chapter-nav button {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.22);
+  cursor: pointer;
+  transition: background .3s var(--ease), width .3s var(--ease);
+  padding: 0;
+}
+.chapter-nav button.active {
+  width: 22px;
+  border-radius: 4px;
+  background: linear-gradient(120deg, var(--pink-1), var(--cyan));
+}
+
+/* ---------- Terminal badge + panel ---------- */
+.terminal-badge {
+  position: fixed; right: calc(28px + env(safe-area-inset-right)); bottom: calc(26px + env(safe-area-inset-bottom)); z-index: 20;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--line);
+  color: var(--cyan);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: background .25s var(--ease);
+}
+.terminal-badge:hover { background: rgba(255,255,255,.12); }
+.terminal-panel {
+  position: fixed;
+  right: calc(28px + env(safe-area-inset-right));
+  bottom: calc(78px + env(safe-area-inset-bottom));
+  z-index: 21;
+  width: 280px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(10,12,18,.92);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 50px -12px rgba(0,0,0,.6);
+  opacity: 0;
+  transform: translateY(12px) scale(.98);
+  pointer-events: none;
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+.terminal-panel.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.terminal-panel-head { display: flex; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.terminal-panel-head span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.15); }
+.terminal-panel-head span:nth-child(1) { background: #ff5f57; }
+.terminal-panel-head span:nth-child(2) { background: #febc2e; }
+.terminal-panel-head span:nth-child(3) { background: #28c840; }
+.terminal-panel-body {
+  padding: 14px 16px 18px;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #8fe6ff;
+  min-height: 90px;
+  white-space: pre-wrap;
+}
+.terminal-panel-body .cursor { display: inline-block; width: 6px; height: 13px; background: #8fe6ff; vertical-align: middle; animation: blink 1s step-end infinite; margin-left: 2px; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---------- Chapters side panel ---------- */
+.chapters-scrim {
+  position: fixed; inset: 0; z-index: 29;
+  background: rgba(4,5,8,.5);
+  backdrop-filter: blur(2px);
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s var(--ease);
+}
+.chapters-scrim.open { opacity: 1; pointer-events: auto; }
+.chapters-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 30;
+  width: min(340px, 84vw);
+  background: rgba(9,11,16,.97);
+  border-left: 1px solid var(--line);
+  transform: translateX(100%);
+  transition: transform .45s var(--ease);
+  display: flex; flex-direction: column;
+}
+.chapters-panel.open { transform: translateX(0); }
+.chapters-panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(26px + env(safe-area-inset-top)) 24px 26px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.chapters-panel-head p { margin: 0; font-weight: 700; font-size: 15px; }
+.chapters-panel-head button { background: none; border: none; color: var(--ink-dim); cursor: pointer; padding: 4px; }
+.chapters-panel-head button:hover { color: var(--ink); }
+#chaptersList { list-style: none; margin: 0; padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); overflow-y: auto; }
+#chaptersList li button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--ink-dim);
+  padding: 13px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+#chaptersList li button span.num { color: var(--pink-1); font-weight: 700; font-size: 12px; min-width: 20px; }
+#chaptersList li button:hover { background: rgba(255,255,255,.05); color: var(--ink); }
+#chaptersList li button.active { background: rgba(255,79,163,.1); color: var(--ink); }
+#chaptersList li button:disabled { opacity: .35; cursor: not-allowed; }
+
+/* ---------- Responsive ----------
+   Width-only breakpoints miss phones in landscape (often 700-930px wide but
+   only 350-430px tall), which would otherwise fall back to the desktop's
+   vertically-centered layout and clip against the fixed topbar on short
+   screens. So this also switches to the compact layout on short viewports,
+   independent of width. */
+@media (max-width: 860px), (max-height: 560px) {
+  .story-inner {
+    left: calc(6% + env(safe-area-inset-left)); right: calc(6% + env(safe-area-inset-right));
+    max-width: none; top: auto; transform: none;
+    bottom: calc(108px + env(safe-area-inset-bottom));
+    max-height: calc(100vh - 96px - 88px - env(safe-area-inset-bottom));
+    max-height: calc(100dvh - 96px - 88px - env(safe-area-inset-bottom));
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .story-inner::-webkit-scrollbar { display: none; }
+  .story-inner.chapter-11 { left: auto !important; right: calc(4% + env(safe-area-inset-right)) !important; width: min(78%, 340px); }
+  .topbar { padding: calc(18px + env(safe-area-inset-top)) calc(18px + env(safe-area-inset-right)) 18px calc(18px + env(safe-area-inset-left)); }
+  .story-arrow { display: none; }
+  .headline { font-size: clamp(26px, 7vw, 40px); }
+  .terminal-badge { right: calc(18px + env(safe-area-inset-right)); bottom: calc(18px + env(safe-area-inset-bottom)); }
+  .terminal-panel { right: calc(18px + env(safe-area-inset-right)); left: calc(18px + env(safe-area-inset-left)); width: auto; }
+}
+
+/* Very short viewports (landscape phones, small tablets in landscape):
+   trim vertical spacing so eyebrow + headline + body + CTA all fit above
+   the bottom-anchored panel without relying on the scroll fallback. */
+@media (max-height: 480px) {
+  .story-inner {
+    bottom: calc(88px + env(safe-area-inset-bottom));
+    max-height: calc(100vh - 76px - 64px - env(safe-area-inset-bottom));
+    max-height: calc(100dvh - 76px - 64px - env(safe-area-inset-bottom));
+  }
+  .eyebrow { margin-bottom: 8px; }
+  .headline { margin-bottom: 10px; font-size: clamp(22px, 6vw, 32px); }
+  .body-copy { margin-bottom: 16px; }
+  .cta { padding: 11px 20px; }
+  .chapter-nav { bottom: calc(14px + env(safe-area-inset-bottom)); }
+  .topbar { padding: calc(12px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 12px calc(16px + env(safe-area-inset-left)); }
+}

@@ -1,0 +1,6 @@
+Drop your royalty-free background track here as: theme.mp3
+
+The site references it at: assets/audio/theme.mp3
+Nothing plays until the visitor clicks the "Music On" button (browsers
+block audio autoplay without a click), so it's safe to leave this
+folder empty — the button will simply do nothing until you add a file.

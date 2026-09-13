@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#090b10" />
+<title>Just Another Workday — Our Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=3" />
+</head>
+<body>
+
+  <!-- Loading screen -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-mark">
+        <span></span><span></span><span></span>
+      </div>
+      <p class="loader-text">Loading scene<span id="loaderPct">0%</span></p>
+    </div>
+  </div>
+
+  <!-- 2D fallback used when the browser blocks WebGL -->
+  <div id="sceneFallback" aria-hidden="true"></div>
+
+  <!-- 3D canvas -->
+  <canvas id="scene"></canvas>
+
+  <!-- Ambient bokeh layer (CSS) -->
+  <div class="bokeh-layer" aria-hidden="true">
+    <span class="bokeh bokeh--cyan" style="--x:8%; --y:22%; --s:180px; --d:18s;"></span>
+    <span class="bokeh bokeh--cyan" style="--x:14%; --y:68%; --s:90px; --d:14s;"></span>
+    <span class="bokeh bokeh--pink" style="--x:78%; --y:12%; --s:140px; --d:20s;"></span>
+    <span class="bokeh bokeh--cyan" style="--x:85%; --y:55%; --s:110px; --d:16s;"></span>
+    <span class="bokeh bokeh--pink" style="--x:55%; --y:80%; --s:70px; --d:12s;"></span>
+    <span class="bokeh bokeh--cyan" style="--x:40%; --y:8%; --s:60px; --d:22s;"></span>
+  </div>
+
+  <!-- Vignette + grain overlay -->
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <button class="music-toggle" id="musicToggle" aria-pressed="false">
+      <span class="music-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+      </span>
+      <span id="musicLabel">Music On</span>
+    </button>
+
+    <div class="topbar-right">
+      <span class="page-counter"><span id="pageCurrent">01</span> / <span id="pageTotal">14</span></span>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open chapters menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Chapter navigation dots (bottom center) -->
+  <nav class="chapter-nav" id="chapterNav" aria-label="Chapters"></nav>
+
+  <!-- Main story content -->
+  <main class="story">
+    <div class="story-inner" id="storyInner">
+      <p class="eyebrow" id="chapterEyebrow">01. Our story begins</p>
+      <h1 class="headline" id="chapterHeadline">Just another<br/>workday&hellip;</h1>
+      <p class="body-copy" id="chapterBody">I thought I was just going to fix a laptop problem.</p>
+      <button class="cta" id="chapterCta">
+        <span id="ctaLabel">Go to SCB Office</span>
+        <span class="cta-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+
+    <button class="story-arrow story-arrow--prev" id="prevChapter" aria-label="Previous chapter">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="story-arrow story-arrow--next" id="nextChapter" aria-label="Next chapter">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </main>
+
+  <!-- Terminal icon (bottom right) -->
+  <button class="terminal-badge" id="terminalBadge" aria-label="Toggle terminal easter egg">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M7 9l3 3-3 3M12 15h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <!-- Terminal easter-egg panel -->
+  <div class="terminal-panel" id="terminalPanel">
+    <div class="terminal-panel-head">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="terminal-panel-body" id="terminalBody"></div>
+  </div>
+
+  <!-- Chapters side menu -->
+  <div class="chapters-scrim" id="chaptersScrim"></div>
+  <aside class="chapters-panel" id="chaptersPanel" aria-hidden="true">
+    <div class="chapters-panel-head">
+      <p>Chapters</p>
+      <button id="closeMenu" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul id="chaptersList"></ul>
+  </aside>
+
+  <audio id="bgMusic" loop preload="none">
+    <source src="assets/audio/theme.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three/build/three.module.min.js",
+        "three/addons/": "./vendor/three/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
