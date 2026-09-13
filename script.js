@@ -1391,7 +1391,7 @@ fogColor: 0x241b16, fogDensity: 0.02 },
       { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_9_2.glb", role: "couple" },
     ],
     bg: "assets/backgrounds/bg-9b.jpg",     // lower half still image
-    video: "assets/video/ch9.mp4",           // upper half looping video
+    video: "https://sharanelumalai.github.io/love_universe/assets/video/ch9.mp4",           // upper half looping video
     mode: "split",
     zoom: 1.25, panX: 0, panY: 0,
     // Chapter 09 was rendering far too dark, especially the lower band —
@@ -1424,7 +1424,7 @@ fogColor: 0x241b16, fogDensity: 0.02 },
   },
   11: { // index 11 = chapter 12 — lantern sky, video background
     glb: "https://sharanelumalai.github.io/love_universe/assets/models/ch_12.glb",
-    video: "assets/video/ch12.mp4",
+    video: "https://sharanelumalai.github.io/love_universe/assets/video/ch12.mp4",
     videoFull: true,                       // video fills the screen, not a band
     mode: "lanterns",
     zoom: 1, panX: 0, panY: 0,
