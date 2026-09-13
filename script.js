@@ -471,7 +471,7 @@ let turnStart = 0;
 const turnDuration = 2.9; // seconds per turn
 
 gltfLoader.load(
-"https://sharanelumalai.github.io/assets/models/character.glb",
+"https://sharanelumalai.github.io/love_universe/assets/models/character.glb",
 (gltf) => {
 character = gltf.scene;
 
@@ -1317,7 +1317,7 @@ actually stride. Real stepping would need a rigged character.
 ========================================================= */
 const chapterScenes = {
 2: { // index 2 = chapter 03
-glb: "https://sharanelumalai.github.io/assets/models/chapter3.glb",
+glb: "https://sharanelumalai.github.io/love_universe/assets/models/chapter3.glb",
 bg: "assets/backgrounds/office-bg-3.jpg",
 mode: "walk",
 zoom: 1, panX: 0, panY: 0, // camera: see notes in loadChapterScene
@@ -1326,7 +1326,7 @@ fillColor: 0xc08cff, fillIntensity: 1.2, ambientColor: 0x3b3a58, ambientIntensit
 fogColor: 0x14121f, fogDensity: 0.022 },
 },
 3: { // index 3 = chapter 04
-glb: "https://sharanelumalai.github.io/assets/models/chapter4.glb",
+glb: "https://sharanelumalai.github.io/love_universe/assets/models/chapter4.glb",
 // NOTE: chapter4_1.glb is intentionally NOT loaded. It turned out to
 // contain a complete miniature copy of the scene (girl + toys), not just
 // the plush toys — loading it placed a tiny duplicate girl standing on
@@ -1340,7 +1340,7 @@ fillColor: 0xffb37a, fillIntensity: 1.3, ambientColor: 0x5a4a42, ambientIntensit
 fogColor: 0x2a211c, fogDensity: 0.02 },
 },
 4: { // index 4 = chapter 05
-glb: "https://sharanelumalai.github.io/assets/models/chapter5.glb",
+glb: "https://sharanelumalai.github.io/love_universe/assets/models/chapter5.glb",
 bg: "assets/backgrounds/office-bg-5.jpg",
 mode: "surprise",
 zoom: 1, panX: 0, panY: 0,
@@ -1349,7 +1349,7 @@ fillColor: 0xff9f6b, fillIntensity: 1.2, ambientColor: 0x53423a, ambientIntensit
 fogColor: 0x241b16, fogDensity: 0.02 },
 },
   5: { // index 5 = chapter 06 — rainy street, umbrella, magical rain
-    glb: "https://sharanelumalai.github.io/assets/models/ch_6.glb",
+    glb: "https://sharanelumalai.github.io/love_universe/assets/models/ch_6.glb",
     bg: "assets/backgrounds/bg-6.jpg",
     mode: "rain",
     rain: true,
@@ -1360,9 +1360,9 @@ fogColor: 0x241b16, fogDensity: 0.02 },
   },
   6: { // index 6 = chapter 07 — couple centre, a floating rock either side
     parts: [
-      { file: "https://sharanelumalai.github.io/assets/models/ch_7_2.glb", role: "center" },
-      { file: "https://sharanelumalai.github.io/assets/models/ch_7_1.glb", role: "leftRock" },
-      { file: "https://sharanelumalai.github.io/assets/models/ch_7_3.glb", role: "rightRock" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_7_2.glb", role: "center" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_7_1.glb", role: "leftRock" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_7_3.glb", role: "rightRock" },
     ],
     bg: "assets/backgrounds/bg-7.jpg",
     mode: "float",
@@ -1373,9 +1373,9 @@ fogColor: 0x241b16, fogDensity: 0.02 },
   },
   7: { // index 7 = chapter 08 — sofa with the pair on it, thunder overhead
     parts: [
-      { file: "https://sharanelumalai.github.io/assets/models/ch_8_2.glb", role: "sofa" },
-      { file: "https://sharanelumalai.github.io/assets/models/ch_8_1.glb", role: "couple" },
-      { file: "https://sharanelumalai.github.io/assets/models/ch_8_3.glb", role: "clouds" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_8_2.glb", role: "sofa" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_8_1.glb", role: "couple" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_8_3.glb", role: "clouds" },
     ],
     bg: "assets/backgrounds/bg-8.jpg",
     mode: "thunder",
@@ -1387,8 +1387,8 @@ fogColor: 0x241b16, fogDensity: 0.02 },
   },
   8: { // index 8 = chapter 09 — split screen: bike ride above, couple below
     parts: [
-      { file: "https://sharanelumalai.github.io/assets/models/ch_9_1.glb", role: "bike" },
-      { file: "https://sharanelumalai.github.io/assets/models/ch_9_2.glb", role: "couple" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_9_1.glb", role: "bike" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_9_2.glb", role: "couple" },
     ],
     bg: "assets/backgrounds/bg-9b.jpg",     // lower half still image
     video: "assets/video/ch9.mp4",           // upper half looping video
@@ -1402,8 +1402,8 @@ fogColor: 0x241b16, fogDensity: 0.02 },
   },
   9: { // index 9 = chapter 10 — under the tree, rain, couple + toys
     parts: [
-      { file: "https://sharanelumalai.github.io/assets/models/ch_10_1.glb", role: "couple" },
-      { file: "https://sharanelumalai.github.io/assets/models/ch_10_2.glb", role: "toys" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_10_1.glb", role: "couple" },
+      { file: "https://sharanelumalai.github.io/love_universe/assets/models/ch_10_2.glb", role: "toys" },
     ],
     bg: "assets/backgrounds/bg-10.jpg",
     mode: "meadowRain",
@@ -1414,7 +1414,7 @@ fogColor: 0x241b16, fogDensity: 0.02 },
              fogColor: 0x261e2e, fogDensity: 0.008 },
   },
   10: { // index 10 = chapter 11 — cliff at night, couple looking out
-    glb: "https://sharanelumalai.github.io/assets/models/ch_11.glb",
+    glb: "https://sharanelumalai.github.io/love_universe/assets/models/ch_11.glb",
     bg: "assets/backgrounds/bg-11.jpg",
     mode: "stargaze",
     zoom: 1, panX: 0, panY: 0,
@@ -1423,7 +1423,7 @@ fogColor: 0x241b16, fogDensity: 0.02 },
              fogColor: 0x101a2e, fogDensity: 0.008 },
   },
   11: { // index 11 = chapter 12 — lantern sky, video background
-    glb: "https://sharanelumalai.github.io/assets/models/ch_12.glb",
+    glb: "https://sharanelumalai.github.io/love_universe/assets/models/ch_12.glb",
     video: "assets/video/ch12.mp4",
     videoFull: true,                       // video fills the screen, not a band
     mode: "lanterns",
@@ -1433,7 +1433,7 @@ fogColor: 0x241b16, fogDensity: 0.02 },
              fogColor: 0x241c30, fogDensity: 0.006 },
   },
   12: { // index 12 = chapter 13 — South Indian wedding
-    glb: "https://sharanelumalai.github.io/assets/models/ch_13.glb",
+    glb: "https://sharanelumalai.github.io/love_universe/assets/models/ch_13.glb",
     bg: "assets/backgrounds/bg-13.jpg",
     mode: "wedding",
     zoom: 1, panX: 0, panY: 0,
@@ -1442,7 +1442,7 @@ fogColor: 0x241b16, fogDensity: 0.02 },
              fogColor: 0x2e2218, fogDensity: 0.006 },
   },
   13: { // index 13 = chapter 14 — church wedding
-    glb: "https://sharanelumalai.github.io/assets/models/ch_14.glb",
+    glb: "https://sharanelumalai.github.io/love_universe/assets/models/ch_14.glb",
     bg: "assets/backgrounds/bg-14.jpg",
     mode: "wedding",
     zoom: 1, panX: 0, panY: 0,
@@ -2288,7 +2288,7 @@ g.rotation.z = Math.sin(t * 0.8) * 0.006;
 
 function loadChapter2Model() {
 gltfLoader.load(
-"https://sharanelumalai.github.io/assets/models/chapter2.glb",
+"https://sharanelumalai.github.io/love_universe/assets/models/chapter2.glb",
 (gltf) => {
 const group = gltf.scene;
 scene.add(group);
