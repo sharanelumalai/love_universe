@@ -2601,7 +2601,7 @@ copy the printed line into cameraTune below to make it permanent. */
 const cameraTune = {
 // chapterIndex: { zoom, panX, panY, panUp }
 0: { zoom: 1, panX: 0, panY: 0 },
-1: { zoom: 0.98, panX: 0, panY: 0 },   // ch2: nudged left
+1: { zoom: 0.98, panX: 0.12, panY: 0 },   // ch2: nudged left
 2: { zoom: 1.5, panX: -0.15, panY: 0 },    // ch3: nudged left
 3: { zoom: 0.4, panX: 0.10, panY: 0.2 },   // ch4: nudged left (was 0.24)
 4: { zoom: 0.85, panX: -0.12, panY: 0.10 }, // ch5: left + zoomed out + moved down
