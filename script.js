@@ -2603,9 +2603,9 @@ const cameraTune = {
 0: { zoom: 1, panX: 0, panY: 0 },
 1: { zoom: 0.98, panX: 0, panY: 0 },   // ch2: nudged left
 2: { zoom: 1, panX: 0, panY: 0 },    // ch3: nudged left
-3: { zoom: 0.6, panX: 0, panY: 0.2 },   // ch4: nudged left (was 0.24)
-4: { zoom: 0.5, panX: 0, panY: 0.0.8 }, // ch5: left + zoomed out + moved down
-5: { zoom: 0.6, panX: 0, panY: 0.10 },
+3: { zoom: 0.5, panX: 0, panY: 0.2 },   // ch4: nudged left (was 0.24)
+4: { zoom: 0.5, panX: 0, panY: 0.8 }, // ch5: left + zoomed out + moved down
+5: { zoom: 0.6, panX: 0, panY: 0.8 },
 6: { zoom: 1.6, panX: 0, panY: 0 },        // ch7: zoomed out to bring the floating rocks into frame
 7: { zoom: 1, panX: -0.12, panY: 0 },      // ch8: nudged left
 8: { zoom: 1.1, panX: 0, panY: 0 },
