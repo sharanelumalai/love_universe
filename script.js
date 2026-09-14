@@ -2623,7 +2623,7 @@ const modelTune = { 0:{rotY:0}, 1:{rotY:0}, 2:{rotY:3.14}, 3:{rotY:-0.57}, 4:{ro
 
 // Per-chapter background image placement: x/y shift and scale.
 const bgTune = { 0:{bgX:-0.5,bgY:0,bgScale:2}, 1:{bgX:0.5,bgY:-1,bgScale:1}, 2:{bgX:0,bgY:0,bgScale:1.5},
-                 3:{bgX:-0.12,bgY:0,bgScale:1.3}, 4:{bgX:0,bgY:0,bgScale:1},
+                 3:{bgX:-0.8,bgY:0,bgScale:1}, 4:{bgX:0,bgY:0,bgScale:1},
 5:{bgX:0,bgY:0,bgScale:1}, 6:{bgX:0,bgY:0.9,bgScale:1},
 7:{bgX:0.9,bgY:0,bgScale:1.05}, 8:{bgX:0.8,bgY:0.9,bgScale:1.3},
 9:{bgX:0,bgY:0,bgScale:1}, 10:{bgX:2,bgY:0,bgScale:1.15}, 11:{bgX:-0.9,bgY:2,bgScale:1.2},
