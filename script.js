@@ -2601,7 +2601,7 @@ copy the printed line into cameraTune below to make it permanent. */
 const cameraTune = {
 // chapterIndex: { zoom, panX, panY, panUp }
 0: { zoom: 1, panX: 0, panY: 0 },
-1: { zoom: 0.98, panX: 0.12, panY: 0 },   // ch2: nudged left
+1: { zoom: 0.98, panX: 0, panY: 0 },   // ch2: nudged left
 2: { zoom: 1.5, panX: -0.15, panY: 0 },    // ch3: nudged left
 3: { zoom: 0.4, panX: 0.10, panY: 0.2 },   // ch4: nudged left (was 0.24)
 4: { zoom: 0.85, panX: -0.12, panY: 0.10 }, // ch5: left + zoomed out + moved down
@@ -2622,7 +2622,7 @@ const modelTune = { 0:{rotY:0}, 1:{rotY:0}, 2:{rotY:3.14}, 3:{rotY:-0.57}, 4:{ro
 9:{rotY:0}, 10:{rotY:3.16}, 11:{rotY:3.16}, 12:{rotY:0}, 13:{rotY:0} };
 
 // Per-chapter background image placement: x/y shift and scale.
-const bgTune = { 0:{bgX:-0.5,bgY:0,bgScale:2}, 1:{bgX:0.7,bgY:-1,bgScale:1}, 2:{bgX:0.2,bgY:0,bgScale:1.1},
+const bgTune = { 0:{bgX:-0.5,bgY:0,bgScale:2}, 1:{bgX:0.5,bgY:-1,bgScale:1}, 2:{bgX:0.2,bgY:0,bgScale:1.1},
                  3:{bgX:0,bgY:-2.25,bgScale:1}, 4:{bgX:0,bgY:0,bgScale:1},
 5:{bgX:0,bgY:0,bgScale:1}, 6:{bgX:0,bgY:0.9,bgScale:1},
 7:{bgX:0.9,bgY:0,bgScale:1.05}, 8:{bgX:0.8,bgY:0.9,bgScale:1.3},
