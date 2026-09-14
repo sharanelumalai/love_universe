@@ -1669,7 +1669,7 @@ toys:   { x: 0.55, y: 0, z: 0.2, s: 0.5, rotY: 0 },
 // Chapter 09 models are scaled up hard: each one should fill most of its
 // own 60/40 band, as in the reference. Vertical position is driven by the
 // band layout each frame, so y here is only a nudge within the band.
-bike:   { x: -0.15, y: 0,    z: 0, s: 2.6, rotY: 0 },
+bike:   { x: -0.15, y: 0,    z: 0, s: 2.6, rotY: 0.35 },
 couple: { x: 0.10,  y: 1,    z: 1, s: 3, rotY: 1.6 },
 },
 };
@@ -2601,19 +2601,19 @@ copy the printed line into cameraTune below to make it permanent. */
 const cameraTune = {
 // chapterIndex: { zoom, panX, panY, panUp }
 0: { zoom: 1, panX: 0, panY: 0 },
-1: { zoom: 0.98, panX: 0, panY: 0 },
-2: { zoom: 1.5, panX: 0., panY: 0 },
-3: { zoom: 0.4, panX: 0.24, panY: 0.2 },
-4: { zoom: 0.7, panX: 0, panY: 0 },
+1: { zoom: 0.98, panX: -0.12, panY: 0 },   // ch2: nudged left
+2: { zoom: 1.5, panX: -0.15, panY: 0 },    // ch3: nudged left
+3: { zoom: 0.4, panX: 0.10, panY: 0.2 },   // ch4: nudged left (was 0.24)
+4: { zoom: 0.85, panX: -0.12, panY: 0.10 }, // ch5: left + zoomed out + moved down
 5: { zoom: 0.6, panX: 0.12, panY: 0.05 },
-6: { zoom: 1, panX: 0, panY: 0 },
-7: { zoom: 1, panX: 0, panY: 0 },
+6: { zoom: 1.6, panX: 0, panY: 0 },        // ch7: zoomed out to bring the floating rocks into frame
+7: { zoom: 1, panX: -0.12, panY: 0 },      // ch8: nudged left
 8: { zoom: 1.1, panX: 0, panY: 0 },
 9: { zoom: 1, panX: 0, panY: 0 },
-10: { zoom: 1, panX: -0.28, panY: 0 },
+10: { zoom: 1, panX: 0.32, panY: 0 },      // ch11: moved fully right (was -0.28)
 11: { zoom: 1, panX: 0, panY: 0.05 },
 12: { zoom: 1, panX: 0, panY: 0.03 },
-13: { zoom: 1, panX: 0.18, panY: 0 },
+13: { zoom: 1, panX: 0.04, panY: 0 },      // ch14: nudged left (was 0.18)
 };
 // Per-chapter model rotation (radians). Adjust with the R slider in the
 // camera panel, or set permanently here.
@@ -2627,7 +2627,7 @@ const bgTune = { 0:{bgX:-0.5,bgY:0,bgScale:2}, 1:{bgX:0.7,bgY:-1,bgScale:1}, 2:{
 5:{bgX:0,bgY:0,bgScale:1}, 6:{bgX:0,bgY:0.9,bgScale:1},
 7:{bgX:0.9,bgY:0,bgScale:1.05}, 8:{bgX:0.8,bgY:0.9,bgScale:1.3},
 9:{bgX:0,bgY:0,bgScale:1}, 10:{bgX:2,bgY:0,bgScale:1.15}, 11:{bgX:-0.9,bgY:2,bgScale:1.2},
-12:{bgX:0,bgY:-0.12,bgScale:1}, 13:{bgX:0,bgY:0,bgScale:1} };
+12:{bgX:0,bgY:-0.12,bgScale:0.92}, 13:{bgX:0,bgY:0,bgScale:1} };
 function getBgTune(i) {
 if (!bgTune[i]) bgTune[i] = { bgX: 0, bgY: 0, bgScale: 1 };
 return bgTune[i];
