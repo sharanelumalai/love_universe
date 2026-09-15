@@ -2610,10 +2610,10 @@ const cameraTune = {
 7: { zoom: 1, panX: -0.12, panY: 0 },      // ch8: nudged left
 8: { zoom: 1.1, panX: 0, panY: 0 },
 9: { zoom: 1, panX: 0, panY: 0 },
-10: { zoom: 1, panX: 0.32, panY: 0 },      // ch11: moved fully right (was -0.28)
+10: { zoom: 1, panX: 0, panY: 0 },      // ch11: moved fully right (was -0.28)
 11: { zoom: 1, panX: 0, panY: 0.05 },
 12: { zoom: 1, panX: 0, panY: 0.03 },
-13: { zoom: 1, panX: 0.04, panY: 0 },      // ch14: nudged left (was 0.18)
+13: { zoom: 1, panX: 0, panY: 0 },      // ch14: nudged left (was 0.18)
 };
 // Per-chapter model rotation (radians). Adjust with the R slider in the
 // camera panel, or set permanently here.
