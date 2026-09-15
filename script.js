@@ -1653,7 +1653,7 @@ const partTune = {
 // Adjust live with the P key panel, then paste the printed values here.
 6: {
 center:    { x: 0,    y: 0,    z: 0, s: 1,    rotY: 0 },
-leftRock:  { x: -1.2, y: 0.95, z: 0.80, s: 1.05, rotY: 1.2 },
+leftRock:  { x: -1.1, y: 0.95, z: 0.80, s: 1.05, rotY: 1.4 },
 rightRock: { x: 1.4,  y: 0.95, z: 0.80, s: 1.05, rotY: -1.1 },
 },
 7: {
