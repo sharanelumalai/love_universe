@@ -1654,7 +1654,7 @@ const partTune = {
 6: {
 center:    { x: 0.24,    y: 0,    z: 0, s: 1,    rotY: 0 },
 leftRock:  { x: -0.80, y: 0.95, z: 0.90, s: 1.05, rotY: 1 },
-rightRock: { x: 1.4,  y: 0.95, z: 0.80, s: 1.05, rotY: -1 },
+rightRock: { x: 1.4,  y: 0.95, z: 0.80, s: 1.15, rotY: -1 },
 },
 7: {
 sofa:   { x: 0.35, y: 0,    z: 0,    s: 1,    rotY: 0 },
