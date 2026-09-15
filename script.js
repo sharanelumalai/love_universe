@@ -3132,7 +3132,26 @@ bgMusic.play().catch(() => {
 bgMusic.pause();
 }
 });
+// Browsers refuse to play audio until the user has interacted with the page,
+// so the initial play() call on load is always blocked. This starts the music
+// on the first click/tap/keypress anywhere — which in practice is the first
+// thing a visitor does, so it feels automatic. The listeners remove
+// themselves after firing once.
+function startMusicOnFirstInteraction() {
+  if (musicOn) {
+    bgMusic.play().catch(() => {});
+  }
+  window.removeEventListener("pointerdown", startMusicOnFirstInteraction);
+  window.removeEventListener("keydown", startMusicOnFirstInteraction);
+  window.removeEventListener("touchstart", startMusicOnFirstInteraction);
+}
+window.addEventListener("pointerdown", startMusicOnFirstInteraction);
+window.addEventListener("keydown", startMusicOnFirstInteraction);
+window.addEventListener("touchstart", startMusicOnFirstInteraction);
 
+// Also try immediately — some browsers allow it if the user has already
+// interacted with your site before (e.g. a previous visit in the same tab).
+bgMusic.play().catch(() => {});
 /* =========================================================
 7. UI — chapters panel
 ========================================================= */
