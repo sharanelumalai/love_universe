@@ -83,7 +83,7 @@ locked: false,
   {
     eyebrow: "11. Your perspective",
     headline: "Now I want to<br/>know about me.",
-    body: "Help me become a better person for you. Your honest suggestions should to makeme even better. \u{1F30D}\u2764\uFE0F",
+    body: "Help me become a better person for you. Your honest suggestions should make me even better. \u{1F30D}\u2764\uFE0F",
     cta: "Continue",
     locked: false,
   },
@@ -2606,7 +2606,7 @@ const cameraTune = {
 3: { zoom: 0.5, panX: 0, panY: 0.2 },   // ch4: nudged left (was 0.24)
 4: { zoom: 0.7, panX: 0, panY: 0.10 }, // ch5: left + zoomed out + moved down
 5: { zoom: 0.6, panX: 0, panY: 0.10 },
-6: { zoom: 1.6, panX: 0, panY: 0 },        // ch7: zoomed out to bring the floating rocks into frame
+6: { zoom: 1, panX: 0, panY: 0 },        // ch7: zoomed out to bring the floating rocks into frame
 7: { zoom: 1, panX: 0, panY: 0 },      // ch8: nudged left
 8: { zoom: 1.1, panX: 0, panY: 0 },
 9: { zoom: 1, panX: 0, panY: 0 },
